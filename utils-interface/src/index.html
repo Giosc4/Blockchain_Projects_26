@@ -1,0 +1,557 @@
+<!doctype html>
+<!--
+  IOTA Utils Interface - Home Page
+  Punto di ingresso dell'applicazione.
+  Definisce la struttura HTML, carica gli stili e il modulo TypeScript principale.
+-->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Interface to test IOTA Move utility functions on testnet"
+    />
+    <title>IOTA Utils Interface</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body>
+    <div class="app">
+      <!-- HEADER: Titolo e Descrizione -->
+      <header class="header">
+        <h1>IOTA Utils Interface</h1>
+        <p>Test PTB functions on IOTA Testnet - Giovanni Maria Savoca</p>
+      </header>
+
+      <!-- BANNER DI STATO: Mostra messaggi di successo o errore -->
+      <div id="status-banner" class="banner hidden">
+        <span id="banner-message"></span>
+        <button
+          class="close-btn"
+          onclick="this.parentElement.classList.add('hidden')"
+        >
+          &times;
+        </button>
+      </div>
+
+      <!-- INFO WALLET: Mostra l'indirizzo e il bottone Faucet -->
+      <div class="faucet-row">
+        <span id="wallet-address" class="wallet-info">Loading wallet...</span>
+        <button id="btn-faucet" class="btn btn-secondary btn-small">
+          💧 Request Faucet
+        </button>
+      </div>
+
+      <!-- LAYOUT A DUE COLONNE -->
+      <div class="two-column-layout">
+        <!-- COLONNA SINISTRA: Lista Funzioni e Input -->
+        <div class="left-column">
+          <!-- NAVIGAZIONE TAB: Selettore tra Funzioni Utils e Documenti -->
+          <nav class="tabs">
+            <button id="tab-utils" class="tab-btn active">
+              Utils Functions
+            </button>
+            <button id="tab-docs" class="tab-btn">Create Document</button>
+          </nav>
+
+          <!-- TAB 1: UTILS FUNCTIONS (List of cards for each Move function) -->
+          <section id="view-utils" class="view functions-list">
+            <!-- FUNCTION: split -->
+            <div class="function-card" id="fn-split">
+              <div class="function-header">
+                <h3>split</h3>
+                <code>split(str, separator) → vector&lt;String&gt;</code>
+              </div>
+              <div class="function-body">
+                <div class="input-group">
+                  <label>String</label>
+                  <input type="text" id="split-str" placeholder="hello,world" />
+                </div>
+                <div class="input-group">
+                  <label>Separator (ASCII)</label>
+                  <input
+                    type="number"
+                    id="split-sep"
+                    value="44"
+                    min="0"
+                    max="255"
+                  />
+                </div>
+                <div class="function-actions">
+                  <button class="btn btn-primary btn-simulate" data-fn="split">
+                    SIMULATE
+                  </button>
+                  <button
+                    class="btn btn-danger btn-execute"
+                    data-fn="split"
+                    disabled
+                  >
+                    EXECUTE
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- FUNCTION: check_lowercase -->
+            <div class="function-card">
+              <div class="function-header">
+                <h3>check_lowercase</h3>
+                <code>check_lowercase(str) → bool</code>
+              </div>
+              <div class="function-body">
+                <div class="input-group">
+                  <label>String</label>
+                  <input
+                    type="text"
+                    id="check_lowercase-str"
+                    placeholder="hello"
+                  />
+                </div>
+                <div class="function-actions">
+                  <button
+                    class="btn btn-primary btn-simulate"
+                    data-fn="check_lowercase"
+                  >
+                    SIMULATE
+                  </button>
+                  <button
+                    class="btn btn-danger btn-execute"
+                    data-fn="check_lowercase"
+                    disabled
+                  >
+                    EXECUTE
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- FUNCTION: check_is_hex -->
+            <div class="function-card">
+              <div class="function-header">
+                <h3>check_is_hex</h3>
+                <code>check_is_hex(str) → bool</code>
+              </div>
+              <div class="function-body">
+                <div class="input-group">
+                  <label>String</label>
+                  <input
+                    type="text"
+                    id="check_is_hex-str"
+                    placeholder="a1b2c3"
+                  />
+                </div>
+                <div class="function-actions">
+                  <button
+                    class="btn btn-primary btn-simulate"
+                    data-fn="check_is_hex"
+                  >
+                    SIMULATE
+                  </button>
+                  <button
+                    class="btn btn-danger btn-execute"
+                    data-fn="check_is_hex"
+                    disabled
+                  >
+                    EXECUTE
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- FUNCTION: count_digits -->
+            <div class="function-card">
+              <div class="function-header">
+                <h3>count_digits</h3>
+                <code>count_digits(n) → u64</code>
+              </div>
+              <div class="function-body">
+                <div class="input-group">
+                  <label>Number (u64)</label>
+                  <input
+                    type="number"
+                    id="count_digits-num"
+                    placeholder="12345"
+                    min="0"
+                  />
+                </div>
+                <div class="function-actions">
+                  <button
+                    class="btn btn-primary btn-simulate"
+                    data-fn="count_digits"
+                  >
+                    SIMULATE
+                  </button>
+                  <button
+                    class="btn btn-danger btn-execute"
+                    data-fn="count_digits"
+                    disabled
+                  >
+                    EXECUTE
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- FUNCTION: sum_bytes_u8 -->
+            <div class="function-card">
+              <div class="function-header">
+                <h3>sum_bytes_u8</h3>
+                <code>sum_bytes_u8(v) → u8</code>
+              </div>
+              <div class="function-body">
+                <div class="input-group">
+                  <label>Vector (comma-separated)</label>
+                  <input
+                    type="text"
+                    id="sum_bytes_u8-vec"
+                    placeholder="1,2,3,4,5"
+                  />
+                </div>
+                <div class="function-actions">
+                  <button
+                    class="btn btn-primary btn-simulate"
+                    data-fn="sum_bytes_u8"
+                  >
+                    SIMULATE
+                  </button>
+                  <button
+                    class="btn btn-danger btn-execute"
+                    data-fn="sum_bytes_u8"
+                    disabled
+                  >
+                    EXECUTE
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- FUNCTION: sum_bytes_u32 -->
+            <div class="function-card">
+              <div class="function-header">
+                <h3>sum_bytes_u32</h3>
+                <code>sum_bytes_u32(v) → u32</code>
+              </div>
+              <div class="function-body">
+                <div class="input-group">
+                  <label>Vector (comma-separated)</label>
+                  <input
+                    type="text"
+                    id="sum_bytes_u32-vec"
+                    placeholder="100,100,100"
+                  />
+                </div>
+                <div class="function-actions">
+                  <button
+                    class="btn btn-primary btn-simulate"
+                    data-fn="sum_bytes_u32"
+                  >
+                    SIMULATE
+                  </button>
+                  <button
+                    class="btn btn-danger btn-execute"
+                    data-fn="sum_bytes_u32"
+                    disabled
+                  >
+                    EXECUTE
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- FUNCTION: string_to_u64 -->
+            <div class="function-card">
+              <div class="function-header">
+                <h3>string_to_u64</h3>
+                <code>string_to_u64(s) → Option&lt;u64&gt;</code>
+              </div>
+              <div class="function-body">
+                <div class="input-group">
+                  <label>String number</label>
+                  <input
+                    type="text"
+                    id="string_to_u64-str"
+                    placeholder="12345"
+                  />
+                </div>
+                <div class="function-actions">
+                  <button
+                    class="btn btn-primary btn-simulate"
+                    data-fn="string_to_u64"
+                  >
+                    SIMULATE
+                  </button>
+                  <button
+                    class="btn btn-danger btn-execute"
+                    data-fn="string_to_u64"
+                    disabled
+                  >
+                    EXECUTE
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- FUNCTION: boolean_from_str -->
+            <div class="function-card">
+              <div class="function-header">
+                <h3>boolean_from_str</h3>
+                <code>boolean_from_str(str) → Option&lt;bool&gt;</code>
+              </div>
+              <div class="function-body">
+                <div class="input-group">
+                  <label>String (true/false)</label>
+                  <input
+                    type="text"
+                    id="boolean_from_str-str"
+                    placeholder="true"
+                  />
+                </div>
+                <div class="function-actions">
+                  <button
+                    class="btn btn-primary btn-simulate"
+                    data-fn="boolean_from_str"
+                  >
+                    SIMULATE
+                  </button>
+                  <button
+                    class="btn btn-danger btn-execute"
+                    data-fn="boolean_from_str"
+                    disabled
+                  >
+                    EXECUTE
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- FUNCTION: remove_white_spaces -->
+            <div class="function-card">
+              <div class="function-header">
+                <h3>remove_white_spaces</h3>
+                <code>remove_white_spaces(str) → String</code>
+              </div>
+              <div class="function-body">
+                <div class="input-group">
+                  <label>String with spaces</label>
+                  <input
+                    type="text"
+                    id="remove_white_spaces-str"
+                    placeholder="hello world"
+                  />
+                </div>
+                <div class="function-actions">
+                  <button
+                    class="btn btn-primary btn-simulate"
+                    data-fn="remove_white_spaces"
+                  >
+                    SIMULATE
+                  </button>
+                  <button
+                    class="btn btn-danger btn-execute"
+                    data-fn="remove_white_spaces"
+                    disabled
+                  >
+                    EXECUTE
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- FUNCTION: equals -->
+            <div class="function-card">
+              <div class="function-header">
+                <h3>equals</h3>
+                <code>equals(first, second) → bool</code>
+              </div>
+              <div class="function-body">
+                <div class="input-group">
+                  <label>First string</label>
+                  <input type="text" id="equals-str1" placeholder="hello" />
+                </div>
+                <div class="input-group">
+                  <label>Second string</label>
+                  <input type="text" id="equals-str2" placeholder="hello" />
+                </div>
+                <div class="function-actions">
+                  <button class="btn btn-primary btn-simulate" data-fn="equals">
+                    SIMULATE
+                  </button>
+                  <button
+                    class="btn btn-danger btn-execute"
+                    data-fn="equals"
+                    disabled
+                  >
+                    EXECUTE
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- FUNCTION: ms_to_string -->
+            <div class="function-card">
+              <div class="function-header">
+                <h3>ms_to_string</h3>
+                <code>date_time::ms_to_string(ts) → String</code>
+              </div>
+              <div class="function-body">
+                <div class="input-group">
+                  <label>Timestamp (ms)</label>
+                  <input
+                    type="number"
+                    id="ms_to_string-ts"
+                    placeholder="1704067200000"
+                    min="0"
+                  />
+                </div>
+                <div class="function-actions">
+                  <button
+                    class="btn btn-primary btn-simulate"
+                    data-fn="ms_to_string"
+                  >
+                    SIMULATE
+                  </button>
+                  <button
+                    class="btn btn-danger btn-execute"
+                    data-fn="ms_to_string"
+                    disabled
+                  >
+                    EXECUTE
+                  </button>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- TAB 2: CREAZIONE DOCUMENTO -->
+          <!-- Form complesso per creare un oggetto Document on-chain -->
+          <section id="view-docs" class="view hidden">
+            <div class="function-card">
+              <div class="function-header">
+                <h3>create_document</h3>
+                <code>manage_documents::create_document(...)</code>
+              </div>
+              <div class="function-body">
+                <div class="input-group">
+                  <label>Title *</label>
+                  <input
+                    type="text"
+                    id="doc-title"
+                    placeholder="Document title"
+                  />
+                </div>
+                <div class="input-group">
+                  <label
+                    >Author *
+                    <button id="btn-fill-author" class="btn-link">
+                      Fill
+                    </button></label
+                  >
+                  <input type="text" id="doc-author" placeholder="0x..." />
+                </div>
+                <div class="input-group">
+                  <label>Content *</label>
+                  <textarea
+                    id="doc-content"
+                    rows="3"
+                    placeholder="Content"
+                  ></textarea>
+                </div>
+                <div class="form-row">
+                  <div class="input-group">
+                    <label>Category</label>
+                    <input type="text" id="doc-category" value="General" />
+                  </div>
+                  <div class="input-group">
+                    <label>Version</label>
+                    <input type="number" id="doc-version" value="1" min="1" />
+                  </div>
+                </div>
+                <div class="input-group">
+                  <label
+                    >Additional Editors
+                    <button id="btn-add-editor" class="btn-link">
+                      + Add
+                    </button></label
+                  >
+                  <div id="editor-entries" class="entries-list"></div>
+                </div>
+
+                <div class="function-actions">
+                  <button id="btn-doc-simulate" class="btn btn-primary">
+                    SIMULATE
+                  </button>
+                  <button id="btn-doc-execute" class="btn btn-danger" disabled>
+                    EXECUTE
+                  </button>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <button id="btn-clear" class="btn btn-full">Clear All</button>
+        </div>
+
+        <!-- COLONNA DESTRA: Risultati e Dettagli Transazione (Sticky) -->
+        <div class="right-column">
+          <div class="sticky-results">
+            <!-- RESULTS CARD: Shows the function's return value -->
+            <div class="card results-card">
+              <div class="card-header">
+                <h2>📊 Results</h2>
+                <button
+                  id="btn-copy-result"
+                  class="btn btn-small btn-secondary"
+                  title="Copy result"
+                >
+                  📋 Copy
+                </button>
+              </div>
+              <div id="result-output" class="result-box">
+                <span class="placeholder"
+                  >Select a function and click SIMULATE</span
+                >
+              </div>
+            </div>
+
+            <!-- CARD DETTAGLI TRANSAZIONE: Mostra il JSON completo della risposta -->
+            <div class="card tx-card">
+              <div class="card-header">
+                <h2>📝 Transaction Details</h2>
+                <button
+                  id="btn-copy-tx"
+                  class="btn btn-small btn-secondary"
+                  title="Copy JSON"
+                >
+                  📋 Copy
+                </button>
+              </div>
+              <div class="search-box">
+                <input
+                  type="text"
+                  id="tx-search"
+                  placeholder="🔍 Search in JSON..."
+                />
+              </div>
+              <pre id="tx-details" class="code-block code-block-large">
+// No transaction executed yet</pre
+              >
+              <div id="search-info" class="search-info"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer class="footer">
+        <p>
+          IOTA Utils Interface • Testnet •
+          <a href="https://iotascan.com/testnet" target="_blank">IOTAscan</a> •
+          Giovanni Maria Savoca
+        </p>
+      </footer>
+    </div>
+
+    <!-- Caricamento Script Principale -->
+    <script type="module" src="main.ts"></script>
+  </body>
+</html>

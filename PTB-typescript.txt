@@ -1,0 +1,54 @@
+Titolo: Implementing PTB CLI via Typescript Autore: Arianna Arruzzoli Data: 8 gennaio 2026 
+
+1. Introduzione
+Nell'ultimo decennio, l'adozione della tecnologia blockchain è cresciuta notevolmente, portando a una vasta gamma di casi d'uso. Le sue proprietà intrinseche sono state studiate per consentire lo sviluppo di numerose applicazioni a livello globale. Dalla finanza al gaming, fino alla sanità e alla pubblica amministrazione, la blockchain è diventata sempre più compresa e applicata in vari contesti.
+
+Le applicazioni che sfruttano le tecnologie decentralizzate sono comunemente chiamate decentralised applications (dApps). Queste impiegano la blockchain per l'archiviazione e l'elaborazione dei dati, garantendo la decentralizzazione pur funzionando in modo simile alle applicazioni tradizionali. Recentemente, si è diffusa la tendenza a migliorare la decentralizzazione utilizzando componenti modulari per funzioni specializzate. Per permettere l'interazione con la blockchain, Sui e IOTA hanno implementato i Programmable Transaction Blocks (PTB), uno strumento che utilizza il linguaggio Move per interagire con gli smart contract.
+
+2. Obiettivo del Progetto
+L'obiettivo principale è lavorare con i PTB e Typescript per creare un modulo che permetta l'interazione tra l'utente e la blockchain. Nello specifico, il progetto mira a implementare un SDK in Typescript per lavorare con smart contract già distribuiti sulla rete IOTA. L'idea è sviluppare un'interfaccia di base (o un form) per gestire e trasmettere i dati verso la logica on-chain. Typescript fornirà gli strumenti per creare un'interfaccia pulita e semplice per l'utente.
+
+3. Contesto
+Il progetto richiede:
+
+Uso della blockchain IOTA.
+
+Comprensione del linguaggio Move e della sua struttura.
+
+Uso di Typescript.
+
+Comunicazione con pacchetti già sviluppati online.
+
+4. Strumenti
+Link utili forniti nel documento:
+
+Panoramica sui Programmable Transaction Blocks.
+
+Costruire PTB con l'SDK di TypeScript.
+
+Documentazione di TypeScript.
+
+4.1 IOTA Explorer
+L'IOTA Explorer è utile per monitorare le transazioni e i risultati sulla Testnet. È possibile utilizzare gli indirizzi di pacchetti e oggetti per esplorarne le proprietà. Il "digest" delle transazioni descrive l'interpretazione della rete, gli input e gli output.
+
+Link: https://iotascan.com/testnet/home.
+
+5. Struttura dell'implementazione
+Il progetto è diviso in pietre miliari (milestones) che fungeranno da criteri di valutazione:
+
+
+Primo step: Creare un'interfaccia base per interagire con il pacchetto "utils". L'interfaccia deve includere un form per l'inserimento dati, pulsanti per diverse funzioni e un banner colorato per lo stato della risposta.
+
+
+Secondo step: Gestione di tipi semplici e complessi di oggetti Move nel form, inclusi numeri (da u8 a u256), stringhe e oggetti.
+
+
+Terzo step: Espansione del formato di input per includere oggetti (mutabili e immutabili), vettori e vecmap.
+
+
+6. Consegna
+Per completare il progetto è necessario:
+
+Scrivere un report dettagliato in LaTeX per la discussione orale.
+
+Inviare il codice in un file .zip all'email: arianna.arruzzoli2@unibo.it.

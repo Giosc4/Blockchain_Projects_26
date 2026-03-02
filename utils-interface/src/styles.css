@@ -1,0 +1,618 @@
+/* =============================================================================
+   IOTA Utils Interface - Foglio di Stile
+   Definisce l'aspetto visivo dell'applicazione (tema scuro, layout responsive).
+   ============================================================================= */
+
+/* Variabili CSS (Custom Properties) per i colori e le spaziature */
+:root {
+  /* Colori di sfondo */
+  --bg-primary: #0a0a0f;
+  --bg-secondary: #12121a;
+  --bg-card: #1a1a24;
+  --bg-input: #0d0d14;
+
+  /* Colori testo */
+  --text-primary: #f0f0f5;
+  --text-secondary: #8888a0;
+  --text-muted: #555570;
+
+  /* Colori semantici (Action, Error, Success) */
+  --primary: #6366f1;
+  --primary-hover: #818cf8;
+  --danger: #ef4444;
+  --danger-hover: #f87171;
+  --success: #10b981;
+  --info: #3b82f6;
+
+  /* Bordi e ombre */
+  --border: #2a2a3a;
+  --border-focus: #6366f1;
+
+  /* Spaziature e font */
+  --radius: 8px;
+  --radius-lg: 12px;
+  --shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+
+  --font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: "Fira Code", "Consolas", monospace;
+}
+
+/* Reset base */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* Container Principale dell'App */
+.app {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Intestazione (Header) */
+.header {
+  text-align: center;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 16px;
+}
+
+.header h1 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.header p {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+/* Riga Wallet e Faucet */
+.faucet-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 16px;
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  margin-bottom: 16px;
+  border: 1px solid var(--border);
+}
+
+.wallet-info {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+/* Banner di Stato (Successo/Errore) */
+.banner {
+  padding: 10px 16px;
+  border-radius: var(--radius);
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+}
+
+.banner.hidden {
+  display: none;
+}
+.banner.success {
+  background: rgba(16, 185, 129, 0.15);
+  border: 1px solid var(--success);
+  color: var(--success);
+}
+.banner.error {
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid var(--danger);
+  color: var(--danger);
+}
+.banner.info {
+  background: rgba(59, 130, 246, 0.15);
+  border: 1px solid var(--info);
+  color: var(--info);
+}
+
+.banner a {
+  color: inherit;
+  font-weight: 600;
+}
+.close-btn {
+  background: none;
+  border: none;
+  color: inherit;
+  font-size: 1.2rem;
+  cursor: pointer;
+  opacity: 0.7;
+}
+.close-btn:hover {
+  opacity: 1;
+}
+
+/* ============================================ */
+/* LAYOUT A DUE COLONNE                         */
+/* ============================================ */
+.two-column-layout {
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  gap: 20px;
+  align-items: start;
+}
+
+.left-column {
+  min-width: 0;
+}
+
+.right-column {
+  min-width: 0;
+}
+
+.sticky-results {
+  position: sticky;
+  top: 20px;
+}
+
+@media (max-width: 1000px) {
+  .two-column-layout {
+    grid-template-columns: 1fr;
+  }
+  .sticky-results {
+    position: static;
+  }
+}
+
+/* Tabs di Navigazione */
+.tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.tab-btn {
+  flex: 1;
+  padding: 10px 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.tab-btn:hover {
+  color: var(--text-primary);
+  background: var(--bg-secondary);
+}
+.tab-btn.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
+}
+
+/* Views */
+.view {
+  display: block;
+}
+.view.hidden {
+  display: none;
+}
+
+.functions-list {
+  max-height: calc(100vh - 250px);
+  overflow-y: auto;
+  padding-right: 8px;
+}
+
+/* Card delle Funzioni */
+.function-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+
+.function-header {
+  padding: 12px 16px;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.function-header h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.function-header code {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  background: var(--bg-input);
+  padding: 3px 6px;
+  border-radius: 4px;
+}
+
+.function-body {
+  padding: 12px 16px;
+}
+
+/* Gruppi di Input (Label + Campo) */
+.input-group {
+  margin-bottom: 10px;
+}
+
+.input-group label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+}
+
+.input-group input[type="text"],
+.input-group input[type="number"],
+.input-group textarea {
+  width: 100%;
+  padding: 8px 10px;
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  font-family: var(--font);
+  transition: border-color 0.2s;
+}
+
+.input-group input:focus,
+.input-group textarea:focus {
+  outline: none;
+  border-color: var(--border-focus);
+}
+
+.input-group textarea {
+  resize: vertical;
+  min-height: 60px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.checkbox-group label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.checkbox-group input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--primary);
+}
+
+/* Function Actions (Buttons) */
+.function-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+}
+
+/* Stili Generali Bottoni */
+.btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: white;
+}
+.btn-primary:hover:not(:disabled) {
+  background: var(--primary-hover);
+}
+
+.btn-danger {
+  background: var(--danger);
+  color: white;
+}
+.btn-danger:hover:not(:disabled) {
+  background: var(--danger-hover);
+}
+
+.btn-secondary {
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+}
+.btn-secondary:hover:not(:disabled) {
+  background: var(--bg-card);
+  color: var(--text-primary);
+}
+
+.btn-small {
+  padding: 4px 10px;
+  font-size: 0.75rem;
+}
+
+.btn-link {
+  background: none;
+  border: none;
+  color: var(--primary);
+  cursor: pointer;
+  font-size: 0.75rem;
+  padding: 0;
+}
+.btn-link:hover {
+  text-decoration: underline;
+}
+
+.btn-full {
+  width: 100%;
+  margin-top: 12px;
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+}
+.btn-full:hover {
+  background: var(--bg-secondary);
+}
+
+/* Card dei Risultati */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  margin-bottom: 12px;
+}
+
+.card h2 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+}
+
+.result-box {
+  padding: 16px;
+  background: var(--bg-input);
+  border-radius: var(--radius);
+  min-height: 100px;
+}
+
+.result-box .placeholder {
+  color: var(--text-muted);
+  font-style: italic;
+  font-size: 0.85rem;
+}
+
+.result-func {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+
+.result-func code {
+  color: var(--primary);
+  background: var(--bg-secondary);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.result-value {
+  font-size: 1.1rem;
+  color: var(--success);
+  font-weight: 600;
+  font-family: var(--font-mono);
+  word-break: break-all;
+}
+
+/* Blocco Codice (JSON Transaction) */
+.code-block {
+  background: var(--bg-input);
+  border-radius: var(--radius);
+  padding: 12px;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  overflow-x: auto;
+  max-height: 400px;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+/* Metadata Entries */
+.entries-list {
+  margin-bottom: 8px;
+}
+
+.entry-row {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.entry-row input {
+  flex: 1;
+  padding: 6px 8px;
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text-primary);
+  font-size: 0.8rem;
+}
+
+.entry-arrow {
+  color: var(--text-muted);
+  font-size: 1rem;
+}
+
+.entry-remove {
+  background: none;
+  border: none;
+  color: var(--danger);
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 2px 6px;
+}
+.entry-remove:hover {
+  color: var(--danger-hover);
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 20px 0;
+  margin-top: 20px;
+  border-top: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+.footer a {
+  color: var(--primary);
+  text-decoration: none;
+}
+.footer a:hover {
+  text-decoration: underline;
+}
+
+/* Scrollbar */
+.functions-list::-webkit-scrollbar {
+  width: 6px;
+}
+.functions-list::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+  border-radius: 3px;
+}
+.functions-list::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+.functions-list::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* Hidden utility */
+.hidden {
+  display: none !important;
+}
+
+/* Card Header with actions */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.card-header h2 {
+  margin-bottom: 0;
+}
+
+/* Card Dettagli Transazione */
+.tx-card {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Search Box */
+.search-box {
+  margin-bottom: 10px;
+}
+
+.search-box input {
+  width: 100%;
+  padding: 8px 12px;
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text-primary);
+  font-size: 0.85rem;
+}
+
+.search-box input:focus {
+  outline: none;
+  border-color: var(--border-focus);
+}
+
+/* Larger code block */
+.code-block-large {
+  max-height: 500px;
+  min-height: 300px;
+  font-size: 0.75rem;
+}
+
+/* Search info */
+.search-info {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  margin-top: 8px;
+  min-height: 16px;
+}
+
+/* Evidenziazione Ricerca */
+.highlight {
+  background: #fbbf24;
+  color: #000;
+  padding: 1px 2px;
+  border-radius: 2px;
+}
+
+/* Copy success animation */
+.copy-success {
+  animation: copyPulse 0.3s ease;
+}
+
+@keyframes copyPulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

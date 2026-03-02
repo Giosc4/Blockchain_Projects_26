@@ -1,0 +1,403 @@
+\documentclass[12pt,a4paper]{article}
+
+% ============================================================================
+% PACKAGES - Optimized for Overleaf
+% ============================================================================
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{amssymb}
+\usepackage{float}
+\usepackage{fancyhdr}
+\usepackage{parskip}
+\usepackage{amsmath}
+
+% ============================================================================
+% PAGE CONFIGURATION
+% ============================================================================
+\geometry{top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm}
+
+\setlength{\headheight}{15pt}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{PTB CLI via TypeScript}
+\lhead{Giovanni Maria Savoca}
+\rfoot{Page \thepage}
+
+% ============================================================================
+% CODE CONFIGURATION
+% ============================================================================
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.97,0.97,0.95}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{blue},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\small,
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    frame=single,
+    tabsize=2,
+    literate={à}{{\`a}}1 {è}{{\`e}}1 {ì}{{\`i}}1 {ò}{{\`o}}1 {ù}{{\`u}}1 {À}{{\`A}}1 {È}{{\`E}}1 {Ì}{{\`I}}1 {Ò}{{\`O}}1 {Ù}{{\`U}}1
+}
+\lstset{style=mystyle}
+
+% Define a custom language for JavaScript if standard one fails, or fallback to Java
+\lstdefinelanguage{JavaScript}{
+  keywords={break, case, catch, class, const, continue, debugger, default, delete, do, else, export, extends, false, finally, for, function, if, import, in, instanceof, let, new, null, return, super, switch, this, throw, true, try, typeof, var, void, while, with, yield},
+  keywordstyle=\color{blue}\bfseries,
+  ndkeywords={class, export, boolean, throw, implements, import, this},
+  ndkeywordstyle=\color{codegreen}\bfseries,
+  identifierstyle=\color{black},
+  sensitive=false,
+  comment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  commentstyle=\color{gray}\ttfamily,
+  stringstyle=\color{red}\ttfamily,
+  morestring=[b]',
+  morestring=[b]"
+}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=cyan,
+    pdftitle={Implementing PTB CLI via TypeScript},
+    pdfauthor={Giovanni Maria Savoca},
+}
+
+% ============================================================================
+% DOCUMENT
+% ============================================================================
+\begin{document}
+
+% ============================================================================
+% TITLE PAGE
+% ============================================================================
+\begin{titlepage}
+    \centering
+    \vspace*{2cm}
+    
+    {\scshape\LARGE University of Bologna \par}
+    \vspace{1.5cm}
+    
+    {\Huge\bfseries Implementing PTB CLI \\ via TypeScript \par}
+    \vspace{0.5cm}
+    {\Large\itshape Interface for Programmable Transaction Blocks \\ on IOTA Blockchain \par}
+    
+    \vspace{3cm}
+    
+    {\Large
+    \begin{tabular}{rl}
+        \textbf{Author:} & Giovanni Maria Savoca \\[0.3cm]
+        \textbf{Professor:} & Prof. Stefano Ferretti \\[0.3cm]
+        \textbf{Tutor:} & Arianna Arruzzoli \\[0.3cm]
+        \textbf{Academic Year:} & 2025/2026 \\
+    \end{tabular}
+    \par}
+    
+    \vfill
+    
+    {\large February 2026 \par}
+    
+\end{titlepage}
+
+% ============================================================================
+% TABLE OF CONTENTS
+% ============================================================================
+\tableofcontents
+\newpage
+
+% ============================================================================
+% 1. INTRODUCTION
+% ============================================================================
+\section{Introduction}
+
+Over the past decade, the adoption of blockchain technology has grown significantly, leading to a wide range of use cases. Its intrinsic properties have been studied to enable the development of numerous applications globally. From finance to gaming, to healthcare and public administration, blockchain has become increasingly understood and applied in various contexts.
+
+Applications leveraging decentralized technologies are commonly called \textbf{decentralized applications} (dApps). These employ blockchain for data storage and processing, ensuring decentralization while functioning similarly to traditional applications. Recently, there has been a trend toward improving decentralization by using modular components for specialized functions. To allow interaction with the blockchain, IOTA have implemented \textbf{Programmable Transaction Blocks} (PTB), a tool that uses the Move language to interact with smart contracts.
+
+The present project aims to implement an SDK in TypeScript to work with smart contracts already deployed on the IOTA Testnet. The idea is to develop a basic interface (or a form) to manage and transmit data to the on-chain logic, providing a clean and simple interface for the user.
+
+% ============================================================================
+% 2. PROJECT OBJECTIVES
+% ============================================================================
+\section{Project Objectives}
+
+The main objective is to work with PTB and TypeScript to create a module that allows interaction between the user and the blockchain. The project is structured into three specific milestones that served as evaluation criteria:
+
+\begin{itemize}
+    \item \textbf{Milestone 1:} Create a basic interface to interact with the \texttt{utils} package. The interface includes a form for data entry, buttons for different functions, and a colored banner to display the response status (success, error, or info).
+    \item \textbf{Milestone 2:} Implementation of Move simple and complex object types in the form. This includes recursive management of numbers (from \texttt{u8} to \texttt{u256}), strings, and object references.
+    \item \textbf{Milestone 3:} Expansion of the input format to include mutable and immutable objects, vectors, and \texttt{VecMap} structures.
+    \item \textbf{Milestone 4 (Bonus Implementation):} Advanced integration with the \texttt{manage\_documents} package, supporting collaborative document creation with multi-author permission management.
+\end{itemize}
+
+The project satisfied these requirements by providing a modular and extensible TypeScript SDK integrated into a user-friendly web interface.
+
+% ============================================================================
+% 3. ARCHITECTURE
+% ============================================================================
+\section{System Architecture}
+
+This section provides a comprehensive description of the system's architecture, explaining the technology stack, the role of each component, the structure of the user interface, the complete catalogue of available functions, and the mechanisms through which transactions are built, executed, and displayed.
+
+% ---------------------------------------------------------------------------
+\subsection{Technologies Used}
+% ---------------------------------------------------------------------------
+
+The project utilizes the following technologies and tools required:
+
+\begin{itemize}
+    \item \textbf{IOTA Blockchain (Testnet):} The foundational layer for executing Move smart contracts.
+    \item \textbf{Move Language:} The resource-oriented language used for the logic of the deployed packages.
+    \item \textbf{TypeScript:} Used to build the SDK and the user interface, providing type safety for blockchain interactions.
+    \item \textbf{@iota/iota-sdk:} The official integration layer to build PTBs and communicate with the network.
+    \item \textbf{IOTA Explorer (Testnet Scan):} Used to monitor transactions and verify the \textbf{digest}, which describes the network's interpretation of inputs and outputs.
+    \item \textbf{Vite:} For development environment management and production bundling.
+\end{itemize}
+
+% ---------------------------------------------------------------------------
+\subsection{IOTA SDK Components}
+% ---------------------------------------------------------------------------
+
+The IOTA SDK provides three fundamental components that constitute the integration layer between the web application and the blockchain:
+
+\subsubsection{IotaClient}
+
+The \texttt{IotaClient} class manages the JSON-RPC connection to an IOTA full node. It is instantiated once at application startup by calling the helper function  \\ \texttt{getFullnodeUrl("testnet")}, which returns the public Testnet RPC endpoint.  \\All subsequent interactions with the blockchain --- simulations, real executions, and object queries --- pass through this single client instance. The client exposes two key methods used by the application: \texttt{devInspectTransactionBlock} for read-only simulations and \texttt{executeTransactionBlock} for state-modifying operations.
+
+\subsubsection{Transaction (PTB Builder)}
+
+The \texttt{Transaction} class is the core builder for Programmable Transaction Blocks (PTBs). A PTB is not a single operation but a sequence of composable \emph{commands} that are executed atomically: either all commands succeed, or the entire block is rolled back. This is one of the most distinctive features of IOTA's transaction model, since it allows chaining multiple operations --- such as creating an object, modifying it, and transferring it --- within a single on-chain transaction.
+
+Each user action in the interface creates a new \texttt{Transaction} instance and populates it with commands. The primary command used in this project is \texttt{moveCall}, which invokes a specific function in a deployed Move module. The target is specified as a string in the format \texttt{package::module::function} (e.g., \texttt{0x578...::myutils::split}), and the arguments are provided as typed references.
+
+The SDK distinguishes two categories of transaction inputs:
+
+\begin{itemize}
+    \item \textbf{Pure inputs} (\texttt{tx.pure.*}): Represent literal values that do not exist on-chain. These include primitives like \texttt{tx.pure.u8()}, \texttt{tx.pure.u64()}, \texttt{tx.pure.string()}, \texttt{tx.pure.bool()}, composite types like \texttt{tx.pure.vector("address", [...])} for typed vectors, and \texttt{tx.pure.address()} for blockchain addresses. Each method serializes the JavaScript value into the corresponding BCS encoding expected by the Move runtime.
+    \item \textbf{Object inputs} (\texttt{tx.object()}): Reference on-chain objects by their Object ID. The SDK resolves the object's ownership mode (Immutable, Owned, or Shared) automatically at build time. A notable example is the Clock object (\texttt{0x6}), a system-level Shared object used to provide timestamps.
+\end{itemize}
+
+
+Once all commands are configured, the \texttt{build()} method serializes the entire transaction into BCS bytes. If the flag \texttt{onlyTransactionKind: true} is passed, only the command payload is serialized (suitable for simulation via \texttt{devInspect}); otherwise, a complete transaction is produced, ready for signing and submission.
+
+\subsubsection{Ed25519Keypair}
+
+The \texttt{Ed25519Keypair} class manages the cryptographic identity of the user. Ed25519 is an elliptic-curve digital signature algorithm based on the Edwards curve Curve25519, chosen by IOTA for its combination of security, speed, and compact signature size (64 bytes).
+
+The application loads a 32-byte private key from the \texttt{.env} file, where it is stored as a hexadecimal string under the variable \texttt{VITE\_PRIVATE\_KEY\_HEX}. At startup, the hex string is decoded into a \texttt{Uint8Array} of raw bytes and passed to \texttt{Ed25519Keypair.fromSecretKey()}, which derives the corresponding public key and creates the keypair object.
+
+The keypair fulfills two roles in the application:
+
+\begin{itemize}
+    \item \textbf{Address derivation:} The method \texttt{getPublicKey().toIotaAddress()} derives the IOTA address from the public key. This address uniquely identifies the wallet on the network and is used as the transaction sender, displayed in the interface header, and pre-filled in the document author field.
+    \item \textbf{Transaction signing:} When a real execution is requested, the method \texttt{signTransaction()} takes the BCS-serialized transaction bytes and produces a cryptographic signature. This signature is sent alongside the transaction bytes to the IOTA node, which verifies it against the sender's public key before accepting the transaction.
+\end{itemize}
+
+For simulated transactions (\texttt{devInspect}), no signature is required --- the node only needs a sender address to resolve object ownership, but does not verify authenticity. This distinction is what allows cost-free testing without exposing the private key to unnecessary signing operations.
+
+% ---------------------------------------------------------------------------
+\subsection{User Interface Structure}
+% ---------------------------------------------------------------------------
+
+The web interface adopts a \textbf{two-column layout} with a tab-based navigation system. The left column hosts user inputs and function controls, while the right column --- which remains fixed during scrolling --- displays results and transaction details.
+
+\subsubsection{Header and Wallet Information}
+
+At the top of the page, a header displays the application title and a brief description. Immediately below, a bar shows the currently loaded wallet address (truncated for readability) alongside a \texttt{Request Faucet} button. Clicking this button invokes the IOTA Testnet faucet API to credit test tokens to the wallet, enabling real transaction execution.
+
+\subsubsection{Left Column: Tabs and Function Cards}
+
+The left column is organized into two tabs, selectable via navigation buttons:
+
+\textbf{Tab ``Utils Functions''.} This tab presents a scrollable list of \emph{function cards}, one for each Move function available in the \texttt{utils} package. Each card contains:
+\begin{itemize}
+    \item The function name and its Move signature (e.g., \texttt{split(str, separator) $\rightarrow$ vector<String>}).
+    \item One or more labeled input fields, pre-configured with appropriate types (text fields for strings, number fields for integers, comma-separated fields for vectors).
+    \item A \texttt{SIMULATE} button to test the function via \texttt{devInspect} (no gas cost, read-only).
+    \item An \texttt{EXECUTE} button, initially disabled, that becomes active only after a successful simulation. Clicking it submits the transaction to the blockchain with a real signature and gas payment.
+\end{itemize}
+
+\textbf{Tab ``Create Document''.} This tab presents a single complex form for creating an on-chain document. The form includes fields for title, author address (with a \texttt{Fill} button to auto-populate the wallet address), content (a multi-line text area), category, and version. A dynamic section labeled \texttt{Additional Editors} allows the user to add an arbitrary number of collaborator addresses through the \texttt{+ Add} button; each added row can be individually removed. The form provides both a \texttt{SIMULATE} button and an \texttt{EXECUTE} button.
+
+A \texttt{Clear All} button at the bottom of the left column resets every input field, clears results, and hides the status banner.
+
+\subsubsection{Right Column: Results and Transaction Details}
+
+The right column contains two panels that remain visible (sticky positioning) regardless of scrolling in the left column:
+
+\textbf{Results panel.} Displays the name of the last invoked function and its decoded return value. When a real transaction has been executed, it also shows a clickable link to the IOTA Explorer page for the corresponding Transaction Digest. A \texttt{Copy} button allows copying the result to the clipboard.
+
+\textbf{Transaction Details panel.} Shows the complete JSON response returned by the IOTA node. For simulation results, this includes the full \texttt{effects} and \texttt{results} objects with raw return values. For real executions, it additionally shows the transaction inputs, object changes, emitted events, and gas consumption. A search bar at the top of this panel enables real-time text search within the JSON payload, with match highlighting and a counter.
+
+\subsubsection{Status Banner}
+
+A notification banner spans the full width of the page and provides immediate visual feedback after any operation. The banner uses color coding: \textbf{green} for successful operations, \textbf{red} for errors, and \textbf{blue} for informational messages. Each banner can be dismissed by clicking its close button.
+
+% ---------------------------------------------------------------------------
+\subsection{Available Move Functions}
+% ---------------------------------------------------------------------------
+
+The interface exposes eleven utility functions from two Move modules, plus one document management function. Each function is accessible through a dedicated card in the interface. The following subsections describe every function, its purpose, its input parameters, and its return type.
+
+\subsubsection{Module \texttt{myutils} --- String Utilities}
+
+\textbf{split.} Splits a string into a vector of substrings using a single-character separator specified by its ASCII code. The function iterates over the bytes of the input string, identifies separator positions, and extracts substrings using the \texttt{substring} method. Input: a UTF-8 string and a \texttt{u8} separator code (e.g., 44 for comma). Output: \texttt{vector<String>}.
+
+\textbf{check\_lowercase.} Verifies whether all characters in a string are lowercase ASCII letters (codes 97--122). Input: a UTF-8 string. Output: \texttt{bool}.
+
+\textbf{check\_is\_hex.} Checks whether a string represents a valid hexadecimal sequence. The function first verifies that the string length is even, then checks that every byte falls within the ranges 97--122 (lowercase letters a--z) or 48--57 (digits 0--9). Input: a UTF-8 string. Output: \texttt{bool}.
+
+\textbf{remove\_white\_spaces.} Removes all whitespace characters (spaces, tabs, line feeds, carriage returns) from a string. The function uses a split-and-rejoin approach: it identifies whitespace positions, splits the string into tokens, and concatenates them without gaps. Input: a UTF-8 string (passed by reference). Output: \texttt{String}.
+
+\textbf{equals.} Compares two strings for equality after removing whitespace from both. It first validates length equality, then performs character-by-character comparison using ASCII conversion. Input: two UTF-8 strings (passed by reference). Output: \texttt{bool}.
+
+\textbf{count\_digits.} Counts the number of decimal digits in an unsigned 64-bit integer. The function repeatedly divides the number by 10, incrementing a counter at each step. Returns 1 for the special case of zero. Input: \texttt{u64}. Output: \texttt{u64}.
+
+\textbf{sum\_bytes\_u8.} Computes the sum of all elements in a byte vector, returning the result as a \texttt{u8}. To prevent overflow, the function uses saturating addition: if the cumulative sum would exceed 255, it is capped at 255. Input: \texttt{vector<u8>} (passed by reference). Output: \texttt{u8}.
+
+\textbf{sum\_bytes\_u32.} Computes the sum of all elements in a byte vector, returning the result as a \texttt{u32}. Unlike the \texttt{u8} variant, this function uses assertion-based overflow protection: it aborts the transaction if the sum exceeds the maximum \texttt{u32} value. Input: \texttt{vector<u8>} (passed by reference). Output: \texttt{u32}.
+
+
+\textbf{string\_to\_u64.} Attempts to convert a numeric string (e.g., ``12345'') into an unsigned 64-bit integer. The function processes each character, verifies that it is a valid ASCII digit, checks for overflow, and accumulates the result using the formula $\text{value} = \text{value} \times 10 + \text{digit}$. Input: a UTF-8 string (passed by reference). Output: \texttt{Option<u64>} (returns \texttt{None} if the string is not a valid number or would overflow).
+
+\textbf{boolean\_from\_str.} Converts a string representation of a boolean (``true'', ``True'', ``false'', ``False'') into the corresponding Move boolean value. Input: a UTF-8 string (passed by reference). Output: \texttt{Option<bool>} (returns \texttt{None} if the string does not match any recognized pattern).
+
+\subsubsection{Module \texttt{date\_time}}
+
+\textbf{ms\_to\_string.} Converts a Unix timestamp in milliseconds to a human-readable date string in the format \texttt{YYYY-MM-DD}. Internally, the function computes the total number of days since the Unix epoch (January 1, 1970), iteratively determines the year (accounting for leap years), the month (using per-month day counts), and the day. Months and days below 10 are zero-padded. Input: \texttt{u64} (milliseconds since epoch). Output: \texttt{String}.
+
+\subsubsection{Module \texttt{manage\_documents}}
+
+\textbf{create\_document.} Creates a persistent document object on the blockchain. This function belongs to a separate package (\texttt{manage\_documents}) and is invoked with eight arguments: title, a vector of author addresses, content, category, version, the on-chain Clock object (address \texttt{0x6}), a boolean flag for public visibility, and a metadata map. The created object is a \texttt{Shared} object, meaning that all addresses listed in the author vector gain permission to interact with it in future transactions.
+
+% ---------------------------------------------------------------------------
+\subsection{Transaction Construction and Execution}
+% ---------------------------------------------------------------------------
+
+The application provides two distinct execution paths for sending transactions to the IOTA network. The choice between them depends on whether the operation needs to modify blockchain state.
+
+\subsubsection{Simulation Mode (DevInspect)}
+
+When the user clicks a \texttt{SIMULATE} button, the application follows this pipeline:
+
+\begin{enumerate}
+    \item A new \texttt{Transaction} object is created.
+    \item The appropriate \emph{function builder} retrieves input values from the DOM, validates them (checking for empty fields, invalid formats, or out-of-range numbers), and adds a \texttt{moveCall} instruction to the transaction.
+    \item The sender address is set on the transaction, and it is serialized to bytes using \texttt{onlyTransactionKind: true} (no signature is required).
+    \item The serialized bytes are sent to the IOTA node via \texttt{devInspectTransactionBlock}, which executes the transaction in a sandboxed environment without modifying state or consuming gas.
+    \item The node returns the full execution result, including \texttt{effects}, \texttt{status}, and --- crucially --- the \texttt{returnValues} array, which contains the raw BCS-encoded bytes of each value returned by the Move function.
+    \item The application decodes the return values (see below) and displays them in the Results panel.
+\end{enumerate}
+
+This mode is ideal for \textbf{pure functions} (those that only compute and return values without modifying on-chain state). It allows unlimited, cost-free testing.
+
+\subsubsection{Real Execution Mode (ExecuteTransaction)}
+
+When the user clicks an \texttt{EXECUTE} button (which is only enabled after a successful simulation), the application follows a different pipeline:
+
+\begin{enumerate}
+    \item The transaction is built as before, but this time without the \texttt{onlyTransactionKind} flag, producing a complete transaction payload.
+    \item The transaction bytes are signed using the \texttt{Ed25519Keypair} loaded from the \texttt{.env} file.
+    \item The signed transaction is sent to the node via \texttt{executeTransactionBlock}. The SDK options \texttt{showEffects}, \texttt{showEvents}, \texttt{showInput}, and \texttt{showObjectChanges} are all enabled, requesting the node to return the most comprehensive response possible.
+    \item The node validates the signature, checks that the sender has sufficient gas, executes the transaction, and --- if successful --- commits the state changes to the blockchain.
+    \item The application receives a response containing the Transaction Digest (a unique hash), the list of created or modified objects, emitted events, and the total gas consumed.
+    \item The Results panel displays the digest and a direct link to the IOTA Explorer for verification.
+\end{enumerate}
+
+A confirmation dialog is shown before every real execution to warn the user that this operation will consume gas tokens.
+
+
+% ---------------------------------------------------------------------------
+\subsection{Modular Architecture and Refactoring}
+% ---------------------------------------------------------------------------
+
+A significant evolution of the project was the transition from a monolithic script to a \textbf{modular architecture}. This refactoring was necessary to manage the increasing complexity of the milestones and ensure code reusability. The codebase was split into specialized modules:
+
+\begin{itemize}
+    \item \textbf{main.ts:} Entry point for application initialization and event routing.
+    \item \textbf{tx-engine.ts:} Abstracts SDK details, handling both simulated and real executions.
+    \item \textbf{ui-interface.ts:} Manages DOM selectors, banners, and result display.
+    \item \textbf{utils-manager.ts:} Registry of function builders for the \texttt{utils} package.
+    \item \textbf{doc-manager.ts:} Logic for document creation and multi-editor management.
+\end{itemize}
+
+\subsubsection{Logical Flow of Transactions}
+
+The logical flow follows a strict \textbf{Verification-before-Execution} pattern, ensuring a clean interaction between the user and the blockchain logic:
+\begin{enumerate}
+    \item \textbf{Input Capture:} Data is retrieved from the form using \texttt{ui-interface.ts}.
+    \item \textbf{Validation:} \texttt{utils-manager.ts} validates types (e.g., \texttt{u8} to \texttt{u256}) and address formats.
+    \item \textbf{PTB Construction:} A \texttt{Transaction} block is built via \texttt{moveCall}.
+    \item \textbf{Simulation (DevInspect):} The block is simulated on the node to verify correctness without gas costs.
+    \item \textbf{Execution:} After a successful simulation, the real transaction is signed and submitted, and the resulting \textbf{digest} is displayed for tracking on the IOTA Explorer.
+\end{enumerate}
+
+% ---------------------------------------------------------------------------
+\subsection{Justification of Implementation Choices}
+% ---------------------------------------------------------------------------
+
+The implementation was guided by the need to satisfy the professor's milestones with a professional approach:
+
+\begin{itemize}
+    \item \textbf{Choosing TypeScript:} Essential for handling Move types correctly. The ability to use \texttt{BigInt} for \texttt{u256} and strong typing for PTB arguments prevents runtime errors during complex interactions.
+    \item \textbf{Refactoring to Modular Structure:} Transitioning from a single \texttt{main.ts} to five specialized modules allowed for better management of high-complexity features like vectors and \texttt{VecMap} (Milestone 3).
+    \item \textbf{Mandatory Simulation:} This design choice protects the user from failed transactions, ensuring the SDK logic is correct before interacting with the live Testnet.
+    \item \textbf{Registry Pattern:} Using a central registry for function builders (\texttt{utils-manager.ts}) made it easy to expand support for the various functions required in Milestone 1 and 2.
+\end{itemize}
+
+% ============================================================================
+% 4. RESULTS
+% ============================================================================
+\section{Results}
+
+All three milestones defined by the professor have been successfully completed and verified:
+\begin{itemize}
+    \item \textbf{Milestone 1:} Functional interface with forms, buttons, and status banners.
+    \item \textbf{Milestone 2:} Support for all numeric types (\texttt{u8}-\texttt{u256}), strings, and object references.
+    \item \textbf{Milestone 3:} Successful integration of mutable/immutable objects, vectors, and \texttt{VecMap} structures.
+    \item \textbf{Milestone 4 (Bonus):} Deployment and verification of a multi-author document management system, proving the system's ability to handle complex state-modifying transactions.
+\end{itemize}
+
+Transactions have been verified through the IOTA Explorer, confirming the correct execution of PTBs and the storage of data on the Testnet.
+
+% ============================================================================
+% 5. CONCLUSIONS
+% ============================================================================
+\section{Conclusions}
+
+The project demonstrated how PTBs and TypeScript can be combined to create powerful tools for blockchain interaction. The transition to a modular architecture (\textit{rielaborazione}) was a key factor in handling the complexity of the requirements.
+
+The final result is a robust SDK and interface that allows for safe, clear, and simple user interaction with Move smart contracts on the IOTA network, meeting all the academic criteria and providing a solid foundation for future dApp development.
+
+% ============================================================================
+% REFERENCES
+% ============================================================================
+\section*{References}
+
+\begin{description}
+    \item[IOTA Documentation] \url{https://docs.iota.org/}
+    \item[IOTA Explorer] \url{https://iotascan.com/testnet/home}
+    \item[VecMap Reference] \url{https://docs.iota.org/developer/references/framework/iota/vec_map}
+    \item[Move Language] \url{https://move-language.github.io/move/}
+\end{description}
+
+\end{document}
